@@ -1,8 +1,14 @@
 import 'package:eyex_ui/config.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
+import 'home.dart';
 
 class Login extends StatelessWidget {
+  void _navigateToHome(BuildContext context){
+    Navigator.push(context, CupertinoPageRoute(builder: (context) => Home()));
+  }
+
   @override
   Widget build(BuildContext context) {
     //get device size
@@ -46,27 +52,31 @@ class Login extends StatelessWidget {
                   child: Padding(
                     padding: EdgeInsets.symmetric(horizontal: 30.0),
                     child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         SizedBox(
                           height: 20,
                         ),
-                        Text(
-                          "Hi, Nice to meet you !",
-                          style: TextStyle(
-                              fontSize: 15, fontWeight: FontWeight.w700),
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Text(
-                          "Welcome to eyex, the app for locating your",
-                          style: TextStyle(color: Colors.black54),
-                        ),
-                        Text(
-                          "favorite restaurants.",
-                          style: TextStyle(color: Colors.black54),
-                        ),
+                        RichText(
+                            text: TextSpan(children: [
+                          TextSpan(
+                            text: "Hi, Nice to meet you !\n\n",
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w700),
+                          ),
+                          TextSpan(
+                            text:
+                                "Welcome to eyex, the app for locating your\n",
+                            style: TextStyle(color: Colors.black54),
+                          ),
+                          TextSpan(
+                            text: "favorite restaurants.",
+                            style: TextStyle(color: Colors.black54),
+                          )
+                        ])),
                         SizedBox(
                           height: 20,
                         ),
@@ -76,7 +86,7 @@ class Login extends StatelessWidget {
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(8)),
                               color: DEEP_BLUE_COLOR,
-                              onPressed: () {},
+                              onPressed:()=> _navigateToHome(context),
                               child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,
@@ -91,9 +101,6 @@ class Login extends StatelessWidget {
                                   )
                                 ],
                               )),
-                        ),
-                        SizedBox(
-                          height: 20,
                         ),
                         Container(
                           height: 50,
@@ -116,6 +123,9 @@ class Login extends StatelessWidget {
                                   )
                                 ],
                               )),
+                        ),
+                        SizedBox(
+                          height: 20,
                         )
                       ],
                     ),
