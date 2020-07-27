@@ -11,7 +11,7 @@ class Home extends StatelessWidget {
       body: Stack(children: [
         Positioned.fill(child: MAIN_BACK()),
         Padding(
-          padding: EdgeInsets.only(bottom: 60),
+          padding: EdgeInsets.only(bottom: 40),
           child: Align(alignment: Alignment.bottomCenter, child: BOTTOM_NAV()),
         )
       ]),
@@ -26,6 +26,14 @@ class BOTTOM_NAV extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
+        boxShadow: [
+          BoxShadow(
+            offset: Offset(0, 0.5),
+            color: Colors.black26,
+            blurRadius: 5,
+            spreadRadius: 2
+          )
+        ],
           borderRadius: BorderRadius.circular(30), color: Colors.white),
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -35,7 +43,7 @@ class BOTTOM_NAV extends StatelessWidget {
             child: IconButton(
                 icon: Icon(
                   Icons.home,
-                  size: 30,
+                  size: 28,
                 ),
                 onPressed: () {}),
           ),
@@ -44,7 +52,7 @@ class BOTTOM_NAV extends StatelessWidget {
             child: IconButton(
                 icon: Icon(
                   Icons.search,
-                  size: 30,
+                  size: 28,
                 ),
                 onPressed: () {}),
           ),
@@ -53,7 +61,7 @@ class BOTTOM_NAV extends StatelessWidget {
             child: IconButton(
                 icon: Icon(
                   Icons.bookmark_border,
-                  size: 30,
+                  size: 28,
                 ),
                 onPressed: () {}),
           ),
@@ -63,8 +71,8 @@ class BOTTOM_NAV extends StatelessWidget {
                 icon: ClipRRect(
                   borderRadius: BorderRadius.circular(15),
                   child: Container(
-                      width: 30,
-                      height: 30,
+                      width: 28,
+                      height: 28,
                       child: Image.asset(
                         imgUrl,
                         fit: BoxFit.cover,
@@ -163,6 +171,7 @@ class MAIN_BACK extends StatelessWidget {
                   // shrinkWrap: true,
                   itemBuilder: (context, i) => FoodCard(
                         data: foodInfo[i],
+                        stars: foodInfo[i]["ratings"],
                       )),
             ),
             SizedBox(
@@ -213,6 +222,7 @@ class MAIN_BACK extends StatelessWidget {
                   // shrinkWrap: true,
                   itemBuilder: (context, i) => FoodCard(
                         data: foodInfo[i],
+                        stars: foodInfo[i]["ratings"],
                       )),
             ),
             SizedBox(
@@ -227,8 +237,8 @@ class MAIN_BACK extends StatelessWidget {
 
 class FoodCard extends StatelessWidget {
   Map<String, dynamic> data;
-  FoodCard({this.data});
-  var _stars = ["*", "*", "*", "", ""];
+  List<String> stars;
+  FoodCard({this.data, this.stars});
 
   @override
   Widget build(BuildContext context) {
@@ -238,7 +248,7 @@ class FoodCard extends StatelessWidget {
         decoration: BoxDecoration(
             color: Colors.white, borderRadius: BorderRadius.circular(10)),
         height: 320,
-        width: 320,
+        width: 290,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
@@ -280,13 +290,19 @@ class FoodCard extends StatelessWidget {
                           width: 10,
                         ),
                         Row(
-                          children: _stars
-                              .map((e) => Icon(
+                          children: stars.map((e) {
+                            return e == ""
+                                ? Icon(
+                                    Icons.star_border,
+                                    size: 20,
+                                    color: Colors.yellow,
+                                  )
+                                : Icon(
                                     Icons.star,
                                     size: 20,
                                     color: Colors.yellow,
-                                  ))
-                              .toList(),
+                                  );
+                          }).toList(),
                         ),
                         Text(
                           "(${data["rating_people"]})",
@@ -336,7 +352,7 @@ class CategoryCard extends StatelessWidget {
           color: data["color"],
         ),
         child: Padding(
-          padding: const EdgeInsets.all(15.0),
+          padding: const EdgeInsets.all(10.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
